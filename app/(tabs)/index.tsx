@@ -1,31 +1,54 @@
-import { StyleSheet } from "react-native";
-
-import EditScreenInfo from "../../components/EditScreenInfo";
-import { Text, View } from "../../components/Themed";
+import { StyleSheet, useColorScheme, TouchableOpacity, Switch, Alert } from "react-native";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { View } from "../../components/Themed";
+import Colors from "../../constants/Colors";
+import { useState } from "react";
 
 export default function TabOneScreen() {
+  const colorScheme = useColorScheme();
+
+  const [is, setIs] = useState(false);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+    <View style={styles.wrapper}>
+      <View style={styles.container}>
+        <TouchableOpacity>
+          <AntDesign name="upcircle" size={150} color={Colors[colorScheme ?? "light"].text} />
+        </TouchableOpacity>
+
+        <TouchableOpacity>
+          <AntDesign name="downcircle" size={150} color={Colors[colorScheme ?? "light"].text} />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.switch}>
+        <Switch
+          value={is}
+          style={{ transform: [{ scale: 3 }] }}
+          onValueChange={() => setIs((p) => !p)}
+        />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  wrapper: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    rowGap: 96,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
+  container: {
+    // flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    rowGap: 96,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
+  switch: {
+    transform: [
+      {
+        rotate: "90deg",
+      },
+    ],
   },
 });
